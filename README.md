@@ -2,7 +2,7 @@
 # 🚀 Project: **ZOO PROYECT**
 
 **Developer:** [Julio Martinez]  
-**Src Directory:** /src/Git/GitHub/Doc-UP-Julio/BDI-GB-ZOO 📂  
+**Src Directory:** Doc-UP-Julio/BDI-GB-ZOO 📂  
 **Created:** 23 Oct 2024 🗓️  
 **Last Updated:** 23 Oct 2024 ✨  
 
