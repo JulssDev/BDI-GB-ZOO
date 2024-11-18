@@ -1,37 +1,49 @@
---INNER JOIN
---Buscar especie segun su estado de consevacion teniendo en cuenta que su familia sea Delfín.
-SELECT E.nombre AS ESPECIE,
-EC.nombre AS ESTADO_CONSERVACION,
-FA.nombrecomun AS FAMILIA
-
+-- INNER JOIN
+-- Mostrar el nombre comun de la familia y el estado de conservacion de la especie Delfín.
+SELECT  E.NOMBRE AS ESPECIE, 
+        EC.NOMBRE AS "ESTADO CONSERVACION",
+        FA.NOMBRECOMUN AS FAMILIA
 FROM ESPECIE E
-INNER JOIN estado_conservacion EC ON E.idestadoconservacion = EC.id
-INNER JOIN familia FA ON E.idfamilia = FA.id
-WHERE E.nombre LIKE '%Delfín%';
+INNER JOIN ESTADO_CONSERVACION EC ON E.IDEstadoConservacion = EC.ID
+INNER JOIN FAMILIA FA ON E.IDFamilia = FA.ID
+WHERE E.Nombre LIKE '%Delfín%';
 
---INNER JOIN
---Listar animales con el nombre de su cuidador y el habitat en el que viven.
-SELECT A.nombre AS nombre_animal,
-CU.nombre AS CUIDADOR,
-HA.nombre AS HABITAT
+-- RIGTH JOIN
+-- MOSTRAR LOS CUIDADORES, ASI NO TENGAN ANIMAL ASIGNADO.
+SELECT  CU.NOMBRE AS CUIDADOR, 
+        A.NOMBRE AS ANIMAL
+FROM ANIMALES A
+RIGHT JOIN CUIDADOR CU ON A.IDCuidador = CU.ID;
 
-FROM ANIMALES AS A
-INNER JOIN CUIDADOR CU ON A.IDcuidador=CU.ID
-INNER JOIN HABITAT HA ON A.IDhabitat=HA.ID;
+-- LEFT JOIN
+-- MOSTRAR LOS VISITANTES QUE NO HAYAN VISITADO NINGUN HABITAT
+SELECT   V.NOMBRE AS VISITANTE
+FROM VISITANTES V
+LEFT JOIN HABITAT_VISITANTES HV ON HV.IDVisitantes = V.ID
+WHERE HV.IDVisitantes IS NULL;
 
---LEFT JOIN
---Listar todos los animales, incluyendo aquellos que no tienen un habitad asignado.
-SELECT A.nombre AS ANIMAL,
-HA.nombre AS HABITAT
+-- NATURAL JOIN
+-- Mostrar las especialidades de los Cuidadores.
+SELECT  CUIDADOR.NOMBRE AS CUIDADOR, 
+        ESPECIALIDAD.NOMBRE AS ESPECIALIDAD
+FROM CUIDADOR
+NATURAL JOIN ESPECIALIDAD;
 
-FROM ANIMALES AS A
-LEFT JOIN HABITAT HA ON A.IDhabitat=HA.ID
-WHERE A.IDhabitat IS NOT NULL;
+-- FULL JOIN
+--Mostrar todos los animales, tengan cuidador o no.
+SELECT  CU.NOMBRE AS CUIDADOR, 
+        A.NOMBRE AS ANIMAL
+FROM ANIMALES A
+FULL JOIN CUIDADOR CU ON A.IDCuidador = CU.ID;
 
---RIGHT JOIN
---Listar todos los cuidadores y los animales que tienen asignados, incluyendo los cuidadores que no tienen animales a su cargo
-SELECT CU.nombre AS CUIDADOR,
-A.nombre AS ANIMAL
-
-FROM ANIMALES AS A
-RIGHT JOIN CUIDADOR CU ON A.IDcuidador=CU.ID;
+-- SELF JOIN
+-- Encontrar todos los animales que comparten 
+-- el mismo cuidador, para el cuidador con el id 1.
+SELECT 
+    a1.nombre AS animal_1, 
+    a2.nombre AS animal_2, 
+    a1.idcuidador
+FROM animales a1
+JOIN animales a2 ON a1.idcuidador = a2.idcuidador
+WHERE a1.id <> a2.id
+AND a1.idcuidador = 1;
