@@ -10,5 +10,3 @@ INNER JOIN ESPECIE E ON A.IDESPECIE=E.ID
 INNER JOIN FAMILIA F ON E.IDFAMILIA=F.ID
 WHERE F.NombreCientifico IN ('Felidae','Ursidae')
 GROUP BY F.NombreCientifico;
-
-SELECT Nombre FROM ANIMALES WHERE A.IDHabitat IN (SELECT ID FROM HABITAT WHERE Nombre IN ('Santuario de aves tropicales'));
